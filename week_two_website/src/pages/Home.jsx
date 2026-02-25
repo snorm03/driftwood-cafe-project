@@ -1,8 +1,24 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Home() {
   const showcaseRef = useRef(null);
+
+  const heroImages = useMemo(() => [
+    { src: '/hero-home.png', alt: 'Driftwood Cafe interior with coffee and pastries' },
+    { src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=900&h=600&fit=crop', alt: 'Coffee cup on a cafe table' },
+    { src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&h=600&fit=crop', alt: 'Barista preparing coffee' },
+    { src: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&h=600&fit=crop', alt: 'Warm cafe atmosphere with pastries' },
+  ], []);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % heroImages.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
 
   useEffect(() => {
     // Small delay so elements start hidden even if already in viewport
@@ -87,13 +103,34 @@ function Home() {
             we craft moments of warmth and connection, one sip at a time.
           </p>
 
-          {/* Hero Image */}
-          <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-xl mb-6">
-            <img
-              src="/hero-home.png"
-              alt="Driftwood Cafe interior with coffee and pastries"
-              className="w-full h-64 md:h-96 object-cover transition-transform duration-500 ease-in-out hover:scale-105"
-            />
+          {/* Hero Image Carousel */}
+          <div className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-xl mb-6 h-64 md:h-96">
+            {heroImages.map((image, index) => (
+              <img
+                key={image.src}
+                src={image.src}
+                alt={image.alt}
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{
+                  opacity: index === currentIndex ? 1 : 0,
+                  transition: 'opacity 0.8s ease-in-out',
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Dot Indicators */}
+          <div className="flex justify-center gap-2 mb-6">
+            {heroImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2.5 h-2.5 rounded-full transition-colors duration-300 ${
+                  index === currentIndex ? 'bg-accent-blue' : 'bg-accent-sage/50'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
