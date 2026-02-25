@@ -14,6 +14,13 @@ function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % heroImages.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
+
+  useEffect(() => {
     // Small delay so elements start hidden even if already in viewport
     const timeout = setTimeout(() => {
       const observer = new IntersectionObserver(
