@@ -103,13 +103,20 @@ function Home() {
             we craft moments of warmth and connection, one sip at a time.
           </p>
 
-          {/* Hero Image */}
-          <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-xl mb-6">
-            <img
-              src="/hero-home.png"
-              alt="Driftwood Cafe interior with coffee and pastries"
-              className="w-full h-64 md:h-96 object-cover transition-transform duration-500 ease-in-out hover:scale-105"
-            />
+          {/* Hero Image Carousel */}
+          <div className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-xl mb-6 h-64 md:h-96">
+            {heroImages.map((image, index) => (
+              <img
+                key={image.src}
+                src={image.src}
+                alt={image.alt}
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{
+                  opacity: index === currentIndex ? 1 : 0,
+                  transition: 'opacity 0.8s ease-in-out',
+                }}
+              />
+            ))}
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
