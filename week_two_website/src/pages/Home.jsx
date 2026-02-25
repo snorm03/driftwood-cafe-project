@@ -119,6 +119,20 @@ function Home() {
             ))}
           </div>
 
+          {/* Dot Indicators */}
+          <div className="flex justify-center gap-2 mb-6">
+            {heroImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2.5 h-2.5 rounded-full transition-colors duration-300 ${
+                  index === currentIndex ? 'bg-accent-blue' : 'bg-accent-sage/50'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/menu" className="btn-primary">
               Explore Our Menu
