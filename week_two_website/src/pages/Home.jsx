@@ -1,15 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Home() {
   const showcaseRef = useRef(null);
 
-  const heroImages = [
+  const heroImages = useMemo(() => [
     { src: '/hero-home.png', alt: 'Driftwood Cafe interior with coffee and pastries' },
     { src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=900&h=600&fit=crop', alt: 'Coffee cup on a cafe table' },
     { src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&h=600&fit=crop', alt: 'Barista preparing coffee' },
     { src: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&h=600&fit=crop', alt: 'Warm cafe atmosphere with pastries' },
-  ];
+  ], []);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
